@@ -1,0 +1,24 @@
+# Ollama is expected to run on the HOST (GPU access is simplest that way).
+# Ports are bound to 127.0.0.1 so nothing is exposed to your network.
+services:
+  backend:
+    build: ./backend
+    environment:
+      OLLAMA_URL: http://host.docker.internal:11434
+      DATA_DIR: /data
+      CORS_ORIGINS: http://localhost:8080
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./data:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  frontend:
+    build: ./frontend
+    depends_on: [backend]
+    ports:
+      - "127.0.0.1:8080:80"

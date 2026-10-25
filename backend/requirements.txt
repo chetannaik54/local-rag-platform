@@ -1,0 +1,27 @@
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+pydantic>=2.7
+pydantic-settings>=2.3
+httpx>=0.27
+chromadb>=0.5.5,<2
+
+# LangChain: text splitting, Ollama chat/embeddings, Chroma vector store
+langchain-core>=0.3
+langchain-text-splitters>=0.3
+langchain-ollama>=0.2
+langchain-chroma>=0.1.4
+
+# LlamaIndex: document loading (PDF/DOCX/CSV/MD/TXT readers)
+llama-index-core>=0.12
+llama-index-readers-file>=0.4
+docx2txt>=0.8
+
+# test / lint
+python-docx>=1.1
+pytest>=8.2
+ruff>=0.5
+
+# optional: local speech-to-text (voice input)
+faster-whisper>=1.0`nav>=14,<17  # faster-whisper 1.2 is incompatible with av 17+
+

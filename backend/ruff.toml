@@ -1,0 +1,7 @@
+line-length = 110
+target-version = "py312"
+
+[lint]
+# B008: FastAPI's File(...)/Query(...) defaults. BLE001: library errors are translated to AppError.
+ignore = ["B008", "BLE001", "RUF007", "C408"]
+

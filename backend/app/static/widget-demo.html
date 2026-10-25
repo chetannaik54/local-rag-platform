@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat widget demo</title>
+  <style>
+    body{font:16px/1.5 system-ui,sans-serif;max-width:680px;margin:48px auto;padding:0 16px;color:#0f172a}
+    code,pre{background:#f1f5f9;border-radius:6px}code{padding:2px 6px}pre{padding:12px;overflow:auto}
+    input{padding:8px;width:100%;max-width:420px;font:inherit}
+    /* The host page's own CSS cannot reach into the widget (Shadow DOM): */
+    button,input{all:revert}
+  </style>
+</head>
+<body>
+  <h1>Chat widget demo</h1>
+  <p>Paste an embed key (Admin &rsaquo; Website embed) to try the chat on this page. The page's origin
+  (<code id="origin"></code>) must be in that key's allowed websites.</p>
+  <form id="f"><label>Embed key <input id="k" placeholder="pk_..." autocomplete="off"></label> <button>Load widget</button></form>
+  <p id="msg" role="status"></p>
+  <h2>Add it to your site</h2>
+  <pre>&lt;script src="https://YOUR-SERVER/widget.js" data-key="pk_..." async&gt;&lt;/script&gt;</pre>
+  <p>Inline instead of a floating bubble: add <code>data-container="#chat"</code> and a <code>&lt;div id="chat" style="height:520px"&gt;</code>.</p>
+  <script>
+    document.getElementById("origin").textContent = location.origin;
+    var params = new URLSearchParams(location.search);
+    function load(key) {
+      if (!/^pk_[A-Za-z0-9_-]+$/.test(key)) { document.getElementById("msg").textContent = "That does not look like an embed key."; return; }
+      var s = document.createElement("script");
+      s.src = "/widget.js"; s.setAttribute("data-key", key); s.setAttribute("data-open", "true");
+      document.body.appendChild(s);
+      document.getElementById("msg").textContent = "Widget loaded.";
+    }
+    document.getElementById("f").addEventListener("submit", function (e) { e.preventDefault(); load(document.getElementById("k").value.trim()); });
+    if (params.get("key")) load(params.get("key"));
+  </script>
+</body>
+</html>
